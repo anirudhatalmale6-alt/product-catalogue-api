@@ -1,0 +1,184 @@
+{
+  "info": {
+    "name": "Physical Product Catalogue API",
+    "description": "REST API for managing physical product records. All endpoints require an X-API-Key header.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000"
+    },
+    {
+      "key": "api_key",
+      "value": "demo-api-key-2024"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/",
+          "host": ["{{base_url}}"],
+          "path": [""]
+        }
+      }
+    },
+    {
+      "name": "Create Product",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{api_key}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sku\": \"WIDGET-001\",\n  \"name\": \"Premium Widget\",\n  \"description\": \"A high-quality widget for everyday use.\",\n  \"price\": 29.99,\n  \"currency\": \"USD\",\n  \"inventory_count\": 150,\n  \"category\": \"Widgets\",\n  \"weight_kg\": 0.5,\n  \"dimensions\": \"10x5x3 cm\",\n  \"brand\": \"WidgetCo\",\n  \"is_active\": true\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/products",
+          "host": ["{{base_url}}"],
+          "path": ["products"]
+        }
+      }
+    },
+    {
+      "name": "List All Products",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{api_key}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/products",
+          "host": ["{{base_url}}"],
+          "path": ["products"]
+        }
+      }
+    },
+    {
+      "name": "List Products (with filters)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{api_key}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/products?category=Widgets&is_active=true&skip=0&limit=50",
+          "host": ["{{base_url}}"],
+          "path": ["products"],
+          "query": [
+            { "key": "category", "value": "Widgets" },
+            { "key": "is_active", "value": "true" },
+            { "key": "skip", "value": "0" },
+            { "key": "limit", "value": "50" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Product by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{api_key}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/products/1",
+          "host": ["{{base_url}}"],
+          "path": ["products", "1"]
+        }
+      }
+    },
+    {
+      "name": "Update Product",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{api_key}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"price\": 24.99,\n  \"inventory_count\": 200,\n  \"description\": \"Updated description for the premium widget.\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/products/1",
+          "host": ["{{base_url}}"],
+          "path": ["products", "1"]
+        }
+      }
+    },
+    {
+      "name": "Delete Product",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{api_key}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/products/1",
+          "host": ["{{base_url}}"],
+          "path": ["products", "1"]
+        }
+      }
+    },
+    {
+      "name": "Request Without API Key (should fail 401)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/products",
+          "host": ["{{base_url}}"],
+          "path": ["products"]
+        }
+      }
+    },
+    {
+      "name": "Request With Wrong API Key (should fail 401)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "wrong-key"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/products",
+          "host": ["{{base_url}}"],
+          "path": ["products"]
+        }
+      }
+    }
+  ]
+}
